@@ -12,11 +12,12 @@ namespace MedicineApi.Models
         public string Type { get; set; } = "";
         public string Manufacturer { get; set; } = "";
         public string ImageUrl { get; set; } = "";
-        public decimal Price { get; set; }
+        public decimal UnitPrice { get; set; }
         public int Qty { get; set; }
         public DateTime ExpiryDate { get; set; }
         public decimal Discount { get; set; }
         public int Status { get; set; }
+
 
     }
 }

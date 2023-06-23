@@ -1,30 +1,30 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using MedicineApi.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Data.SqlClient;
-using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Logging;
 using Npgsql;
 
 namespace MedicineApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class MedicineController : ControllerBase
     {
         private readonly IConfiguration _configuration;
 
-
-        public UsersController(IConfiguration configuration)
+        public MedicineController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
+
         [HttpPost]
-        [Route("register")]
-        public Respoce Register(Users users)
+        [Route("addtocard")]
+        public Respoce AddToCard(Card card)
         {
             Respoce response = new Respoce();
             string connectionString = _configuration.GetConnectionString("EMedCS").ToString();
@@ -34,7 +34,7 @@ namespace MedicineApi.Controllers
             {
                 try
                 {
-                    response = dal.register(users, connection);
+                    response = dal.addToCard(card, connection);
 
                 }
                 catch (Exception ex)
@@ -48,8 +48,8 @@ namespace MedicineApi.Controllers
         }
 
         [HttpPost]
-        [Route("login")]
-        public Respoce Login(Users users)
+        [Route("removefromcard")]
+        public Respoce RemoveFromCard(Card card)
         {
             Respoce response = new Respoce();
             string connectionString = _configuration.GetConnectionString("EMedCS").ToString();
@@ -59,7 +59,7 @@ namespace MedicineApi.Controllers
             {
                 try
                 {
-                    response = dal.login(users, connection);
+                    response = dal.removeFromCard(card, connection);
 
                 }
                 catch (Exception ex)
@@ -73,8 +73,8 @@ namespace MedicineApi.Controllers
         }
 
         [HttpPost]
-        [Route("viewUser")]
-        public Respoce ViewUser(Users users)
+        [Route("orderlist")]
+        public Respoce GetOrderList(Users user)
         {
             Respoce response = new Respoce();
             string connectionString = _configuration.GetConnectionString("EMedCS").ToString();
@@ -84,7 +84,7 @@ namespace MedicineApi.Controllers
             {
                 try
                 {
-                    response = dal.viewUser(users, connection);
+                    response = dal.getOrderList(user, connection);
 
                 }
                 catch (Exception ex)
@@ -95,35 +95,10 @@ namespace MedicineApi.Controllers
             }
 
             return response;
+
+
+
+
         }
-
-        [HttpPost]
-        [Route("updateUser")]
-        public Respoce UpdateUser(Users users)
-        {
-            Respoce response = new Respoce();
-            string connectionString = _configuration.GetConnectionString("EMedCS").ToString();
-            DAL dal = new DAL();
-
-            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
-            {
-                try
-                {
-                    response = dal.updateUser(users, connection);
-
-                }
-                catch (Exception ex)
-                {
-                    // Handle any errors that occur during the connection process.
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
-            }
-
-            return response;
-        }
-
-
-
-
     }
 }

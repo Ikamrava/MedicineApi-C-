@@ -15,6 +15,8 @@ namespace MedicineApi.Models
 
         public decimal TotalPrice { get; set; }
 
+        public int MedicineId { get; set; }
+
 
     }
 }

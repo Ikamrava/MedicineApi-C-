@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using MedicineApi.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ namespace MedicineApi.Controllers
         [Route("addupdatemedicine")]
         public Respoce AddUpdateMedicine(Medicine medicine)
         {
+
             Respoce response = new Respoce();
             string connectionString = _configuration.GetConnectionString("EMedCS").ToString();
             DAL dal = new DAL();

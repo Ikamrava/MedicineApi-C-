@@ -43,6 +43,7 @@ namespace MedicineApi.Controllers
                     Console.WriteLine($"Error: {ex.Message}");
                 }
             }
+            System.Console.WriteLine(response);
 
             return response;
         }

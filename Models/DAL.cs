@@ -24,6 +24,7 @@ namespace MedicineApi.Models
                 command.Parameters.AddWithValue("@fund", 0);
                 command.Parameters.AddWithValue("@type", "Users");
                 command.Parameters.AddWithValue("@status", "Pending");
+                System.Console.WriteLine(command.Parameters.AddWithValue("@firstname", user.FirstName));
 
                 int i = command.ExecuteNonQuery();
                 connection.Close();
@@ -290,10 +291,11 @@ namespace MedicineApi.Models
         public Respoce addupdateMedicine(Medicine medicine, NpgsqlConnection connection)
         {
             Respoce respoce = new Respoce();
-            connection.Open();
+
             string query = "INSERT INTO medicine (name,manufacturer,unitprice,discount,qty,expirydate,imgurl,status,type) VALUES(@name,@manufacturer,@unitprice,@discount,@qty,@expirydate,@imgurl,@status,@type)";
             using (NpgsqlCommand command = new NpgsqlCommand(query, connection))
             {
+
                 command.Parameters.AddWithValue("@name", medicine.Name);
                 command.Parameters.AddWithValue("@manufacturer", medicine.Manufacturer);
                 command.Parameters.AddWithValue("@unitprice", medicine.UnitPrice);
@@ -302,6 +304,7 @@ namespace MedicineApi.Models
                 command.Parameters.AddWithValue("@imgurl", medicine.ImageUrl);
                 command.Parameters.AddWithValue("@status", medicine.Status);
                 command.Parameters.AddWithValue("@type", medicine.Type);
+                command.Parameters.AddWithValue("@expirydate", medicine.ExpiryDate);
 
 
                 connection.Open();
@@ -316,6 +319,7 @@ namespace MedicineApi.Models
                 {
                     respoce.StatusCode = 100;
                     respoce.Message = "Add Medicine Failed";
+
 
                 }
                 return respoce;
